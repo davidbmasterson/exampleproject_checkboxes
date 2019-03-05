@@ -1,0 +1,57 @@
+﻿@page "/"
+
+<h5>checked items </h5>
+
+<ul>
+    @foreach (var story in Stories.Where(c => c.Checked == true).ToArray())
+    {
+       
+        <li><input type="checkbox" bind="@story.Checked"  /> @story.Description</li>
+    }
+</ul>
+
+<h5>unchecked items</h5>
+<ul>
+    @foreach (var story in Stories.Where(c => c.Checked == false).ToArray())
+    {
+      
+        <li><input type="checkbox" bind="@story.Checked"  /> @story.Description</li>
+    }
+</ul>
+
+<h5>state of values in list</h5>
+<table>
+    @foreach (var story in Stories)
+    {
+        <tr>
+            <td> @story.Description</td>
+            <td> @story.Checked.ToString()</td>
+        </tr>
+
+    }
+</table>
+
+@functions {
+
+    public List<Tag> Stories { get; set; } = new List<Tag>();
+
+
+    protected override async Task OnInitAsync()
+    {
+
+        Stories.Add(new Tag() { Id = 1, Description = "Angels", Checked = false });
+        Stories.Add(new Tag() { Id = 2, Description = "Knights", Checked = false });
+        Stories.Add(new Tag() { Id = 3, Description = "Dinosaurs", Checked = false });
+        Stories.Add(new Tag() { Id = 4, Description = "Dragons", Checked = false });
+
+    }
+
+    public class Tag
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public bool Checked { get; set; }
+    }
+
+
+}
